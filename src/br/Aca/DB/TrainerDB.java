@@ -28,7 +28,7 @@ public class TrainerDB {
 	{
 
 		String strIncluir = "INSERT INTO trainer ("
-				+ "tra_codigo, tra_nome, tra_data_nasc, tra_sexo, academia) "
+				+ "tra_codigo, tra_nome, tra_data_nasc, tra_sexo, tra_aca_codigo) "
 				+ "VALUES (" + t.getCodigo() 	+ ","
 				+ "'" + t.getNome() 				+ "',"
 				+ t.getDataNasc() 						+ ","
@@ -50,7 +50,7 @@ public class TrainerDB {
 		EntityNotExistException
 	{
 
-		String strBusca = "SELECT tra_codigo, tra_nome, tra_data_nasc, tra_sexo, academia "
+		String strBusca = "SELECT tra_codigo, tra_nome, tra_data_nasc, tra_sexo, tra_aca_codigo "
 				+ " FROM trainer "
 				+ " WHERE tra_codigo = " + tra_codigo + ";";
 
@@ -76,7 +76,7 @@ public class TrainerDB {
 		return trainer;
 	}
 	// PAREI AQUI
-	public boolean updProfessor(Trainer t) throws
+	public boolean updTrainer(Trainer t) throws
 		DataBaseGenericException, 
 		DataBaseNotConnectedException,
 		EntityNotExistException 
@@ -86,14 +86,14 @@ public class TrainerDB {
 				+ " SET tra_nome = '" + t.getNome() 			+ "',"
 				+ " tra_data_nasc = " + t.getDataNasc()						+ ", "
 				+ " tra_sexo = '" + t.getSexo()					+ "', "
-				+ " academia = " + t.getAcademia().getCodigo()	+ " "
+				+ " tra_aca_codigo = " + t.getAcademia().getCodigo()	+ " "
 				+ " WHERE tra_codigo = " + t.getCodigo() 	+ ";";
 
 		getTrainer(t.getCodigo());
 		return cnx.atualize(strAtualizar) > 0;
 	}
 
-	public boolean delProfessor(Trainer t) throws
+	public boolean delTrainer(Trainer t) throws
 		DataBaseGenericException, 
 		DataBaseNotConnectedException,
 		EntityNotExistException
@@ -115,7 +115,7 @@ public class TrainerDB {
 
 		List<Trainer> listaDeTrainers = new ArrayList<Trainer>();
 
-		String strBusca = "SELECT tra_codigo, tra_nome, tra_data_nasc, tra_sexo, academia "
+		String strBusca = "SELECT tra_codigo, tra_nome, tra_data_nasc, tra_sexo, tra_aca_codigo "
 				+ " FROM trainer;";
 
 		Trainer trainer;
@@ -143,7 +143,7 @@ public class TrainerDB {
 		return listaDeTrainers;
 	}
 
-	public List<Trainer> getProfessoresPorNome(String tra_nome) throws
+	public List<Trainer> getTrainersPorNome(String tra_nome) throws
 		DataBaseGenericException, 
 		DataBaseNotConnectedException,
 		EntityTableIsEmptyException,
@@ -152,7 +152,7 @@ public class TrainerDB {
 
 		List<Trainer> listaDeTrainers = new ArrayList<Trainer>();
 
-		String strBusca = "SELECT tra_codigo, tra_nome, tra_data_nasc, tra_sexo, academia "
+		String strBusca = "SELECT tra_codigo, tra_nome, tra_data_nasc, tra_sexo, tra_aca_codigo "
 				+ " FROM trainer "
 				+ " WHERE tra_nome LIKE '%" + tra_nome + "%';";
 
