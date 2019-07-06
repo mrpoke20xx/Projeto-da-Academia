@@ -19,14 +19,14 @@ public class AcademiaDB {
 		this.cnx = cnx;
 	}
 
-	public boolean addCentro(Academia c) throws 
+	public boolean addAcademia(Academia c) throws 
 		DataBaseGenericException, 
 		DataBaseNotConnectedException,
 		EntityAlreadyExistException
 	{
 
 		String strInsercao = 
-				"INSERT INTO academia (codigo, nome, endereco, fone) "
+				"INSERT INTO academia (aca_codigo, aca_nome, aca_endereco, aca_fone) "
 				+ "VALUES ('" + c.getCodigo() + "', "
 				+ "'" + c.getNome() + "',"
 				+ "'" + c.getEndereco() + "',"
@@ -34,7 +34,7 @@ public class AcademiaDB {
 
 		try {
 			getAcademia(c.getCodigo());
-			throw new EntityAlreadyExistException("Academia (codigo='" + c.getCodigo() + "')"); 
+			throw new EntityAlreadyExistException("Academia (aca_codigo='" + c.getCodigo() + "')"); 
 		} catch (EntityNotExistException e) {
 			return cnx.atualize(strInsercao) > 0;
 		}
@@ -49,9 +49,9 @@ public class AcademiaDB {
 
 		Academia c = null;
 		
-		String strBusca = "SELECT codigo, nome, endereco, fone"
+		String strBusca = "SELECT aca_codigo, aca_nome, aca_endereco, aca_fone"
 				+ "FROM academia "
-				+ "WHERE codigo = '" + codigo + "';";
+				+ "WHERE aca_codigo = '" + codigo + "';";
 		
 		rs = cnx.consulte(strBusca);
 		
@@ -78,10 +78,10 @@ public class AcademiaDB {
 		String strAtualizao = 
 				"UPDATE academia "
 				+ "SET "
-				+ "nome = '" + c.getNome() + "',"
-				+ "endereco = '" + c.getEndereco() + "',"
-				+ "fone ='" + c.getFone() + "',"
-				+ "WHERE codigo = '" + c.getCodigo() + "';";
+				+ "aca_nome = '" + c.getNome() + "',"
+				+ "aca_endereco = '" + c.getEndereco() + "',"
+				+ "aca_fone ='" + c.getFone() + "',"
+				+ "WHERE aca_codigo = '" + c.getCodigo() + "';";
 
 		getAcademia(c.getCodigo());
 		return cnx.atualize(strAtualizao) > 0;
@@ -96,14 +96,14 @@ public class AcademiaDB {
 		
 		String strDelecao = 
 				"DELETE FROM academia "
-				+ "WHERE codigo = '" + c.getCodigo() + "';";
+				+ "WHERE aca_codigo = '" + c.getCodigo() + "';";
 		
 		getAcademia(c.getCodigo());		
 		return cnx.atualize(strDelecao) > 0;
 		
 	}		
 	
-	public List<Academia> getAcademia () throws
+	public List<Academia> getAcademias () throws
 		DataBaseGenericException, 
 		DataBaseNotConnectedException,
 		EntityTableIsEmptyException
@@ -112,7 +112,7 @@ public class AcademiaDB {
 		Academia c = null;
 		List<Academia> academia = new ArrayList<Academia>();
 		
-		String strBusca = "SELECT codigo, nome, endereco, fone "
+		String strBusca = "SELECT aca_codigo, aca_nome, aca_endereco, aca_fone "
 				+ "FROM academia;";
 		
 		rs = cnx.consulte(strBusca);
@@ -144,9 +144,9 @@ public class AcademiaDB {
 		Academia c = null;
 		List<Academia> academia = new ArrayList<Academia>();
 		
-		String strBusca = "SELECT codigo, nome, endereco, fone "
+		String strBusca = "SELECT aca_codigo, aca_nome, aca_endereco, aca_fone "
 				+ "FROM academia "
-				+ "WHERE nome LIKE '%" + nome + "%';";
+				+ "WHERE aca_nome LIKE '%" + nome + "%';";
 		
 		rs = cnx.consulte(strBusca);
 		
