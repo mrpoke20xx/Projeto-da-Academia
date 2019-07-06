@@ -29,15 +29,15 @@ public class TrainerDB {
 
 		String strIncluir = "INSERT INTO trainer ("
 				+ "tra_codigo, tra_nome, tra_data_nasc, tra_sexo, academia) "
-				+ "VALUES (" + t.getMatricula() 	+ ","
+				+ "VALUES (" + t.getCodigo() 	+ ","
 				+ "'" + t.getNome() 				+ "',"
-				+ t.getRg() 						+ ","
-				+ t.getCpf() 						+ ","
-				+ "'" + t.getAcademia().getSigla()	+ "');";
+				+ t.getDataNasc() 						+ ","
+				+ "'" +t.getSexo() 						+ "',"
+				+ "" + t.getAcademia().getCodigo()	+ ");";
 
 		try {
-			getTrainer(t.getMatricula());
-			throw new EntityAlreadyExistException("Trainer (tra_codigo=" + t.getMatricula() + ")"); 
+			getTrainer(t.getCodigo());
+			throw new EntityAlreadyExistException("Trainer (tra_codigo=" + t.getCodigo() + ")"); 
 		} catch (EntityNotExistException e) {
 			return cnx.atualize(strIncluir) > 0;
 		}
@@ -62,15 +62,9 @@ public class TrainerDB {
 
 			if (rs.next()){
 
-				academia = adb.getAcademia(rs.getString(7));				
+				academia = adb.getAcademia(rs.getInt(5));				
 
-				trainer = new Trainer(rs.getInt(1), 
-						rs.getString(2),
-						rs.getInt(3),
-						rs.getInt(4),
-						rs.getString(5),
-						rs.getString(6),
-						academia);
+				trainer = new Trainer(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), academia);
 
 			}else {
 				throw new EntityNotExistException("Trainer (tra_codigo=" + tra_codigo + ")");
@@ -90,12 +84,12 @@ public class TrainerDB {
 
 		String strAtualizar = "UPDATE trainer "
 				+ " SET tra_nome = '" + t.getNome() 			+ "',"
-				+ " tra_data_nasc = " + t.getRg()						+ ", "
-				+ " tra_sexo = " + t.getCpf()					+ ", "
-				+ " academia = '" + t.getAcademia().getSigla()	+ "' "
-				+ " WHERE tra_codigo = " + t.getMatricula() 	+ ";";
+				+ " tra_data_nasc = " + t.getDataNasc()						+ ", "
+				+ " tra_sexo = '" + t.getSexo()					+ "', "
+				+ " academia = " + t.getAcademia().getCodigo()	+ " "
+				+ " WHERE tra_codigo = " + t.getCodigo() 	+ ";";
 
-		getTrainer(t.getMatricula());
+		getTrainer(t.getCodigo());
 		return cnx.atualize(strAtualizar) > 0;
 	}
 
@@ -106,9 +100,9 @@ public class TrainerDB {
 	{
 
 		String strDeletar = "DELETE FROM trainer "
-				+ " WHERE tra_codigo = " + t.getMatricula() + ";";
+				+ " WHERE tra_codigo = " + t.getCodigo() + ";";
 
-		getTrainer(t.getMatricula());
+		getTrainer(t.getCodigo());
 		return cnx.atualize(strDeletar) > 0;
 	}
 
@@ -133,9 +127,9 @@ public class TrainerDB {
 				rs.beforeFirst();			
 				while(rs.next()){
 	
-					academia = adb.getAcademia(rs.getString(7));				
+					academia = adb.getAcademia(rs.getInt(5));				
 	
-					trainer = new Trainer(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getString(5), rs.getString(6), academia);
+					trainer = new Trainer(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), academia);
 	
 					listaDeTrainers.add(trainer);
 				}
@@ -171,15 +165,9 @@ public class TrainerDB {
 			if (rs.next()) {
 				rs.beforeFirst();			
 				while(rs.next()){
-					academia = adb.getAcademia(rs.getString(7));				
+					academia = adb.getAcademia(rs.getInt(5));				
 	
-					trainer = new Trainer(rs.getInt(1), 
-							rs.getString(2),
-							rs.getInt(3),
-							rs.getInt(4),
-							rs.getString(5),
-							rs.getString(6),
-							academia);
+					trainer = new Trainer(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), academia);
 	
 					listaDeTrainers.add(trainer);
 				}
