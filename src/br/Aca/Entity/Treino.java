@@ -6,12 +6,12 @@ public class Treino {
 	private int codigo;
 	private Date vencimento;
 	private Cliente cliente;
-	private Equipamento equipamento;
-	public Treino (int codigo, Date vencimento, Cliente cliente, Equipamento equipamento){
+	private Exercicio exercicio;
+	public Treino (int codigo, Date vencimento, Cliente cliente, Exercicio exercicio){
 		this.codigo = codigo;
 		this.vencimento = vencimento;
 		this.cliente = cliente;
-		this.equipamento = equipamento;
+		this.exercicio = exercicio;
 	}
 	public int getCodigo() {
 		return codigo;
@@ -31,10 +31,10 @@ public class Treino {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	public Equipamento getEquipamento() {
-		return equipamento;
+	public Exercicio getExercicio() {
+		return exercicio;
 	}
-	public void setEquipamento(Equipamento equipamento) {
-		this.equipamento = equipamento;
+	public void setExercicio(Exercicio exercicio) {
+		this.exercicio = exercicio;
 	}
 }

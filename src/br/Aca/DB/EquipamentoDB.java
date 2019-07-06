@@ -113,7 +113,7 @@ public class EquipamentoDB {
 		EntityNotExistException
 	{
 
-		List<Equipamento> listaDeTrainers = new ArrayList<Equipamento>();
+		List<Equipamento> listaDeEquipamentos = new ArrayList<Equipamento>();
 
 		String strBusca = "SELECT equ_codigo, equ_nome, equ_pesomax, equ_descricao, equ_aca_codigo "
 				+ " FROM equipamento;";
@@ -131,7 +131,7 @@ public class EquipamentoDB {
 	
 					equipamento = new Equipamento(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getString(4), academia);
 	
-					listaDeTrainers.add(equipamento);
+					listaDeEquipamentos.add(equipamento);
 				}
 			}else {
 				throw new EntityTableIsEmptyException("Equipamento");
@@ -140,7 +140,7 @@ public class EquipamentoDB {
 			throw new DataBaseGenericException(sqle.getErrorCode(), 
 					sqle.getMessage());
 		}
-		return listaDeTrainers;
+		return listaDeEquipamentos;
 	}
 
 	public List<Equipamento> getEquipamentosPorNome(String tra_nome) throws
@@ -150,11 +150,11 @@ public class EquipamentoDB {
 		EntityNotExistException
 	{
 
-		List<Equipamento> listaDeTrainers = new ArrayList<Equipamento>();
+		List<Equipamento> listaDeEquipamentos = new ArrayList<Equipamento>();
 
 		String strBusca = "SELECT equ_codigo, equ_nome, equ_pesomax, equ_descricao, equ_aca_codigo "
 				+ " FROM equipamento "
-				+ " WHERE tra_nome LIKE '%" + tra_nome + "%';";
+				+ " WHERE equ_nome LIKE '%" + tra_nome + "%';";
 
 		Equipamento equipamento;
 		Academia academia;
@@ -169,7 +169,7 @@ public class EquipamentoDB {
 	
 					equipamento = new Equipamento(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getString(4), academia);
 	
-					listaDeTrainers.add(equipamento);
+					listaDeEquipamentos.add(equipamento);
 				}
 			}else {
 				throw new EntityTableIsEmptyException("Equipamento");
@@ -178,7 +178,7 @@ public class EquipamentoDB {
 			throw new DataBaseGenericException(sqle.getErrorCode(), 
 					sqle.getMessage());
 		}
-		return listaDeTrainers;
+		return listaDeEquipamentos;
 	}
 
 }
