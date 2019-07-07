@@ -4,6 +4,7 @@ import java.util.*;
 import br.Aca.DB.*;
 import br.Aca.Entity.*;
 import br.Aca.Exception.*;
+import java.sql.Date;
 
 public class TrainerLogic {
 
@@ -15,31 +16,37 @@ public class TrainerLogic {
 		ac1 = new AcademiaLogic(cnx);
 	}
 	
-	public boolean addTrainer(int codigo, String nome, java.sql.Date data_nasc, String sexo, int academia) throws
+	public boolean addTrainer(int codigo, String nome, Date data_nasc, String sexo, int academia) throws
 		DataBaseGenericException, 
 		DataBaseNotConnectedException, 
 		EntityAlreadyExistException,
-		InvalidFieldException 
+		InvalidFieldException
 	{
-
 		List<String> camposInvalidos = new ArrayList<String>();
 		boolean haCamposInvalidos = false;
 		Academia aca = null;
-
+		try {
+			aca = ac1.getAcademia(academia);
+		} catch (EntityNotExistException e) {
+			haCamposInvalidos = true;
+			camposInvalidos.add("Academia");
+		}	
 		if(codigo < 1){
 			haCamposInvalidos = true;
 			camposInvalidos.add("Codigo");
 		}
-		
 		if(nome.isEmpty() || nome.length() > 60){
 			haCamposInvalidos = true;
 			camposInvalidos.add("Nome");
 		}
-
+		if(sexo.isEmpty()){
+			haCamposInvalidos = true;
+			camposInvalidos.add("Sexo");
+		}
 		if (haCamposInvalidos){
 			throw new InvalidFieldException("Trainer", camposInvalidos);
 		}			
-		aca = ac1.getAcademia(academia);
+		
 		Trainer c = new Trainer(codigo, nome, data_nasc, sexo, aca);
 		return tdb.addTrainer(c);
 	}
@@ -60,34 +67,33 @@ public class TrainerLogic {
 		EntityNotExistException,
 		InvalidFieldException
 	{
-
-	List<String> camposInvalidos = new ArrayList<String>();
-	boolean haCamposInvalidos = false;
-
-	if(codigo < 1){
-		haCamposInvalidos = true;
-		camposInvalidos.add("Codigo");
-	}
-	
-	if(nome.isEmpty() || nome.length() > 60){
-		haCamposInvalidos = true;
-		camposInvalidos.add("Nome");
-	}
-
-	if(endereco.isEmpty() || endereco.length() > 60){
-		haCamposInvalidos = true;
-		camposInvalidos.add("Endereco");
-	}
-
-	if (haCamposInvalidos){
-		throw new InvalidFieldException("Trainer", camposInvalidos);
-	}	
-
-	if (haCamposInvalidos){
-		throw new InvalidFieldException("Trainer", camposInvalidos);
-	}	
-		Trainer c = new Trainer(codigo, nome, data_nasc, sexo, academia);
-		return tdb.updTrainer(c);	
+		List<String> camposInvalidos = new ArrayList<String>();
+		boolean haCamposInvalidos = false;
+		Academia aca = null;
+		try {
+			aca = ac1.getAcademia(academia);
+		} catch (EntityNotExistException e) {
+			haCamposInvalidos = true;
+			camposInvalidos.add("Academia");
+		}	
+		if(codigo < 1){
+			haCamposInvalidos = true;
+			camposInvalidos.add("Codigo");
+		}
+		if(nome.isEmpty() || nome.length() > 60){
+			haCamposInvalidos = true;
+			camposInvalidos.add("Nome");
+		}
+		if(sexo.isEmpty()){
+			haCamposInvalidos = true;
+			camposInvalidos.add("Sexo");
+		}
+		if (haCamposInvalidos){
+			throw new InvalidFieldException("Trainer", camposInvalidos);
+		}			
+		
+		Trainer c = new Trainer(codigo, nome, data_nasc, sexo, aca);
+		return tdb.updTrainer(c);
 	}
 	
 	public boolean delTrainer(int codigo, String nome, Date data_nasc, String sexo, int academia) throws
@@ -95,14 +101,15 @@ public class TrainerLogic {
 		DataBaseNotConnectedException, 
 		EntityNotExistException 
 	{
-		Trainer c = new Trainer(codigo, nome, data_nasc, sexo, academia);
+		Academia aca = ac1.getAcademia(academia);
+		Trainer c = new Trainer(codigo, nome, data_nasc, sexo, aca);
 		return tdb.delTrainer(c);
 	}
 	
 	public List<Trainer> getTrainers() throws
 		DataBaseGenericException,
 		DataBaseNotConnectedException, 
-		EntityTableIsEmptyException
+		EntityTableIsEmptyException, EntityNotExistException
 	{
 		return tdb.getTrainers();
 	}
@@ -110,8 +117,8 @@ public class TrainerLogic {
 	public List<Trainer> getTrainerPorNome(String nome) throws
 		DataBaseGenericException,
 		DataBaseNotConnectedException,
-		EntityTableIsEmptyException
+		EntityTableIsEmptyException, EntityNotExistException
 	{
-		return tdb.getTrainerPorNome(nome);
+		return tdb.getTrainersPorNome(nome);
 	}
 }
