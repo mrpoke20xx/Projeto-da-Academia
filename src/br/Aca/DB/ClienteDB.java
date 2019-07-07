@@ -108,7 +108,7 @@ public class ClienteDB {
 		return cnx.atualize(strDeletar) > 0;
 	}
 
-	public List<Cliente> getCLientes() throws
+	public List<Cliente> getClientes() throws
 		DataBaseGenericException, 
 		DataBaseNotConnectedException,
 		EntityTableIsEmptyException,

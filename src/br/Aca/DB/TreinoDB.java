@@ -36,7 +36,7 @@ public class TreinoDB {
 				+ "" + t.getExercicio().getCodigo() + ");";
 
 		try {
-			getExercicio(t.getCodigo());
+			getTreino(t.getCodigo());
 			throw new EntityAlreadyExistException("Treino (tre_codigo=" + t.getCodigo() + ")"); 
 		} catch (EntityNotExistException ex) {
 			return cnx.atualize(strIncluir) > 0;
@@ -44,7 +44,7 @@ public class TreinoDB {
 
 	}
 
-	public Treino getExercicio(int tre_codigo) throws
+	public Treino getTreino(int tre_codigo) throws
 		DataBaseGenericException, 
 		DataBaseNotConnectedException,
 		EntityNotExistException
@@ -90,7 +90,7 @@ public class TreinoDB {
 				+ " tre_exe_codigo = " + t.getExercicio().getCodigo() +","
 				+ " WHERE tre_codigo = " + t.getCodigo() 	+ ";";
 
-		getExercicio(t.getCodigo());
+		getTreino(t.getCodigo());
 		return cnx.atualize(strAtualizar) > 0;
 	}
 
@@ -103,7 +103,7 @@ public class TreinoDB {
 		String strDeletar = "DELETE FROM treino "
 				+ " WHERE tre_codigo = " + t.getCodigo() + ";";
 
-		getExercicio(t.getCodigo());
+		getTreino(t.getCodigo());
 		return cnx.atualize(strDeletar) > 0;
 	}
 
