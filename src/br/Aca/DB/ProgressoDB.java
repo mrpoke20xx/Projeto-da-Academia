@@ -178,5 +178,4 @@ public class ProgressoDB {
 		}
 		return listaDeProgressos;
 	}
-
 }
