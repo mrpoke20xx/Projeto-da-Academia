@@ -43,7 +43,7 @@ public class CadastroCliente {
 //	AcaoConfirmar actConfirmar = new AcaoConfirmar();
 //	AcaoCancelar actCancelar = new AcaoCancelar();
 
-	public CadastroCliente() {
+	public CadastroCliente(JFrame pai, Conexao cnx) {
 
 		// Configuração da janela
 		janela.setDefaultCloseOperation(janela.DISPOSE_ON_CLOSE);
@@ -51,7 +51,7 @@ public class CadastroCliente {
 		janela.setResizable(true);
 		janela.setLayout(new BorderLayout());
 		janela.setLocationRelativeTo(null);
-//		janela.setVisible(true);
+		janela.setVisible(true);
 
 		// Criando os paineis
 		p_controles = new JPanel(new GridLayout(1, 4));
@@ -124,12 +124,12 @@ public class CadastroCliente {
 
 			String strAtualize = "";
 			int tra_cod, cli_cod;
-			char sexo;
-			String nome, endereco, fone, nasc, curso, necessidade;
+			//char sexo;
+			String sexo, nome, endereco, fone, nasc, curso, necessidade;
 
 			tra_cod = Integer.parseInt(tf_tra_cod.getText());
 			cli_cod = Integer.parseInt(tf_cod.getText());
-			sexo = tf_sexo.getText().charAt(0);
+			sexo = tf_sexo.getText();//.charAt(0);
 			nome = tf_nome.getText();
 			endereco = tf_endereco.getText();
 			nasc = tf_nasc.getText();
@@ -142,16 +142,17 @@ public class CadastroCliente {
 					pl.addCliente(cli_cod, nome, endereco, nasc, sexo, necessidade, tra_cod);
 					break;
 				case EDICAO:
-					pl.updCliente(tra_cod, cli_cod, sexo, nome, endereco, nasc, necessidade);
+					pl.updCliente(cli_cod, nome, endereco, nasc, sexo, necessidade, tra_cod);
 					break;
 				case EXCLUSAO:
-					pl.delCliente(tra_cod, cli_cod, sexo, nome, endereco, nasc, necessidade);
+					pl.delCliente(cli_cod, nome, endereco, nasc, sexo, necessidade, tra_cod);
 					break;
 			}
+				
 				limparCampos();
 				janela.setVisible(false);
 				pai.setVisible(true);
-				pai.buscar();
+				pai.buscar(); //Dando erro
 			} catch (DataBaseGenericException | DataBaseNotConnectedException | EntityAlreadyExistException
 					| InvalidFieldException | EntityNotExistException e1) {
 			JOptionPane.showMessageDialog(janela, e1.getMessage(), "Cadastro de Centro", JOptionPane.ERROR_MESSAGE);
@@ -165,7 +166,7 @@ public class CadastroCliente {
 		AcaoCancelar() {
 			super("Cancelar");
 			putValue(MNEMONIC_KEY, KeyEvent.VK_L);
-			putValue(SHORT_DESCRIPTION, "Cancelar operaÃ§Ã£o!");
+			putValue(SHORT_DESCRIPTION, "Cancelar operação!");
 
 		}
 
