@@ -34,7 +34,7 @@ class ConsultaCliente extends JFrame {
 	static final String imagesPath = new String("images/");	
 
 	ConsultaCliente(JFrame framePai, Conexao conexao){ // método construtor
-		super("Consulta de Aluno"); // chamando construtor da classe mãe
+		super("Consulta de Aluno"); // chamando construtor da classe mÃ£e
 		setSize(800, 400);				// definindo dimensões da janela
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setTitle("Consulta de Aluno");
@@ -89,7 +89,7 @@ class ConsultaCliente extends JFrame {
 		add(new JScrollPane(tblQuery));
 		add(pnlOperacoes, BorderLayout.SOUTH);		
 
-	} //Fim do método construtor
+	} //Fim do mÃ©todo construtor
 
 	class AcaoBuscar extends AbstractAction{
 
@@ -106,7 +106,7 @@ class ConsultaCliente extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			buscar();
+			buscar(); //Dando erro
 
 		}
 
