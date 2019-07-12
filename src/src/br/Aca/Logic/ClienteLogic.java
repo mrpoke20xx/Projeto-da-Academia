@@ -51,7 +51,7 @@ public class ClienteLogic {
 		Cliente c = new Cliente(codigo, nome, endereco, data_nasc, sexo, necessidade, tra);
 		return cdb.addCliente(c);
 	}
-	
+	//cli_cod, nome, endereco, nasc, sexo, necessidade, tra_cod
 	public Cliente getCliente(int codigo) throws
 		DataBaseGenericException,
 		DataBaseNotConnectedException,
@@ -62,7 +62,7 @@ public class ClienteLogic {
 		
 	}
 	
-	public boolean updCliente(int codigo, String nome, String endereco, Date data_nasc, String sexo, String necessidade, int trainer) throws
+	public boolean updCliente(int codigo, String nome, String endereco, String data_nasc, String sexo, String necessidade, int trainer) throws
 		DataBaseGenericException, 
 		DataBaseNotConnectedException, 
 		EntityNotExistException,
@@ -97,7 +97,7 @@ public class ClienteLogic {
 		return cdb.updCliente(c);
 	}
 	
-	public boolean delCliente(int codigo, String nome, String endereco, Date data_nasc, String sexo, String necessidade, int trainer) throws
+	public boolean delCliente(int codigo, String nome, String endereco, String data_nasc, String sexo, String necessidade, int trainer) throws
 		DataBaseGenericException, 
 		DataBaseNotConnectedException, 
 		EntityNotExistException 
