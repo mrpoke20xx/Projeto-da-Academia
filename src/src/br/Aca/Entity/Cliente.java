@@ -6,12 +6,13 @@ public class Cliente {
 	private int codigo;
 	private String nome;
 	private String endereco;
-	private Date dataNasc;
+	private String dataNasc; //mudado de Date para String
 	private String sexo;
 	private String necessidade;
 	private Trainer trainer;
-	public Cliente(int codigo, String nome, String endereco, Date dataNasc, String sexo, String necessidade, Trainer trainer){
-		this.codigo = codigo;
+	//, nome, endereco, nasc, sexo, necessidade, tra_cod
+	public Cliente(int cli_cod, String nome, String endereco, String dataNasc, String sexo, String necessidade, Trainer trainer){
+		this.codigo = cli_cod;
 		this.nome = nome;
 		this.endereco = endereco;
 		this.dataNasc = dataNasc;
@@ -37,10 +38,10 @@ public class Cliente {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-	public Date getDataNasc() {
+	public String getDataNasc() {
 		return dataNasc;
 	}
-	public void setDataNasc(Date dataNasc) {
+	public void setDataNasc(String dataNasc) {
 		this.dataNasc = dataNasc;
 	}
 	public String getSexo() {
