@@ -1,6 +1,7 @@
 package br.Aca.DB;
 
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 
 import br.Aca.Entity.*;
@@ -29,13 +30,13 @@ public class ClienteDB {
 
 		String strIncluir = "INSERT INTO cliente ("
 				+ "cli_codigo, cli_nome, cli_endereco, cli_data_nasc, cli_sexo, cli_necessidade, cli_tra_cod) "
-				+ "VALUES (" + c.getCodigo() 	+ ","
+				+ "VALUES (" + c.getCodigo() 		+ ","
 				+ "'" + c.getNome() 				+ "',"
-				+ "'" + c.getEndereco() + "',"
-				+ c.getDataNasc() 						+ ","
-				+ "'" +c.getSexo() 						+ "',"
-				+ "'" +c.getNecessidade() + "',"
-				+ "" + c.getTrainer().getCodigo()	+ ");";
+				+ "'" + c.getEndereco() 			+ "',"
+				+ c.getDataNasc() 					+ ","
+				+ "'" +c.getSexo() 					+ "',"
+				+ "'" +c.getNecessidade() 			+ "',"
+				+ "" + c.getTrainer()				+ ");";
 
 		try {
 			getCliente(c.getCodigo());
@@ -63,8 +64,8 @@ public class ClienteDB {
 			if (rs.next()){
 
 				trainer = tdb.getTrainer(rs.getInt(6));				
-
-				cliente = new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(3), rs.getString(4), rs.getString(5), trainer);
+					//int codigo, String nome, String endereco, Date dataNasc, char sexo, String necessidade, int trainer
+				cliente = new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(3), rs.getString(4).charAt(0), rs.getString(5), rs.getInt(6));
 
 			}else {
 				throw new EntityNotExistException("Cliente (cli_codigo=" + cli_codigo + ")");
@@ -88,7 +89,7 @@ public class ClienteDB {
 				+ " cli_data_nasc = " + c.getDataNasc()						+ ", "
 				+ " cli_sexo = '" + c.getSexo()					+ "', "
 				+ " cli_necessidade =" + c.getNecessidade() + "',"
-				+ " cli_tra_cod = " + c.getTrainer().getCodigo()	+ " "
+				+ " cli_tra_cod = " + c.getTrainer()	+ " "
 				+ " WHERE cli_codigo = " + c.getCodigo() 	+ ";";
 
 		getCliente(c.getCodigo());
@@ -131,7 +132,7 @@ public class ClienteDB {
 	
 					trainer = tdb.getTrainer(rs.getInt(6));				
 	
-					cliente = new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(3), rs.getString(4), rs.getString(5), trainer);
+					cliente = new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(3), rs.getString(4).charAt(0), rs.getString(5), rs.getInt(6));
 	
 					listaDeClientes.add(cliente);
 				}
@@ -169,7 +170,7 @@ public class ClienteDB {
 				while(rs.next()){
 					trainer = tdb.getTrainer(rs.getInt(6));				
 	
-					cliente = new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(3), rs.getString(4), rs.getString(5), trainer);
+					cliente = new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(3), rs.getString(4).charAt(0), rs.getString(5), rs.getInt(6));
 	
 					listaDeClientes.add(cliente);
 				}

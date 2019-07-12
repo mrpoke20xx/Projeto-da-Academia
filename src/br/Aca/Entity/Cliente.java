@@ -7,10 +7,11 @@ public class Cliente {
 	private String nome;
 	private String endereco;
 	private Date dataNasc;
-	private String sexo;
+	private char sexo;
 	private String necessidade;
-	private Trainer trainer;
-	public Cliente(int codigo, String nome, String endereco, Date dataNasc, String sexo, String necessidade, Trainer trainer){
+	private int trainer;
+	
+	public Cliente(int codigo, String nome, String endereco, Date dataNasc, char sexo, String necessidade, int trainer){
 		this.codigo = codigo;
 		this.nome = nome;
 		this.endereco = endereco;
@@ -43,10 +44,10 @@ public class Cliente {
 	public void setDataNasc(Date dataNasc) {
 		this.dataNasc = dataNasc;
 	}
-	public String getSexo() {
+	public char getSexo() {
 		return sexo;
 	}
-	public void setSexo(String sexo) {
+	public void setSexo(char sexo) {
 		this.sexo = sexo;
 	}
 	public String getNecessidade() {
@@ -55,10 +56,10 @@ public class Cliente {
 	public void setNecessidade(String necessidade) {
 		this.necessidade = necessidade;
 	}
-	public Trainer getTrainer() {
+	public int getTrainer() {
 		return trainer;
 	}
-	public void setTrainer(Trainer trainer) {
+	public void setTrainer(int trainer) {
 		this.trainer = trainer;
 	}
 }

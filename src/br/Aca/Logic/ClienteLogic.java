@@ -16,7 +16,7 @@ public class ClienteLogic {
 		ac1 = new TrainerLogic(cnx);
 	}
 	
-	public boolean addCliente(int codigo, String nome, String endereco, Date data_nasc, String sexo, String necessidade, int trainer) throws
+	public boolean addCliente(int codigo, String nome, String endereco, Date data_nasc, char sexo, String necessidade, int trainer) throws
 		DataBaseGenericException, 
 		DataBaseNotConnectedException, 
 		EntityAlreadyExistException,
@@ -24,10 +24,9 @@ public class ClienteLogic {
 	{
 		List<String> camposInvalidos = new ArrayList<String>();
 		boolean haCamposInvalidos = false;
-		Trainer tra = null;
-		try {
-			tra = ac1.getTrainer(trainer);
-		} catch (EntityNotExistException e) {
+		String newsexo = String.valueOf(sexo);
+		
+		if(trainer < 1) {
 			haCamposInvalidos = true;
 			camposInvalidos.add("Trainer");
 		}	
@@ -39,15 +38,16 @@ public class ClienteLogic {
 			haCamposInvalidos = true;
 			camposInvalidos.add("Nome");
 		}
-		if(sexo.isEmpty()){
+		if(newsexo.isEmpty()){
 			haCamposInvalidos = true;
 			camposInvalidos.add("Sexo");
 		}
 		if (haCamposInvalidos){
 			throw new InvalidFieldException("Cliente", camposInvalidos);
-		}			
+		}
 		
-		Cliente c = new Cliente(codigo, nome, endereco, data_nasc, sexo, necessidade, tra);
+		//int codigo, String nome, String endereco, Date dataNasc, String sexo, String necessidade, int trainer
+		Cliente c = new Cliente(codigo, nome, endereco, data_nasc, sexo, necessidade, trainer);
 		return cdb.addCliente(c);
 	}
 	
@@ -61,7 +61,7 @@ public class ClienteLogic {
 		
 	}
 	
-	public boolean updCliente(int codigo, String nome, String endereco, Date data_nasc, String sexo, String necessidade, int trainer) throws
+	public boolean updCliente(int codigo, String nome, String endereco, Date data_nasc, char sexo, String necessidade, int trainer) throws
 		DataBaseGenericException, 
 		DataBaseNotConnectedException, 
 		EntityNotExistException,
@@ -69,13 +69,11 @@ public class ClienteLogic {
 	{
 		List<String> camposInvalidos = new ArrayList<String>();
 		boolean haCamposInvalidos = false;
-		Trainer tra = null;
-		try {
-			tra = ac1.getTrainer(trainer);
-		} catch (EntityNotExistException e) {
+		String newsexo = String.valueOf(sexo);
+		if(trainer < 1) {
 			haCamposInvalidos = true;
 			camposInvalidos.add("Trainer");
-		}	
+		}
 		if(codigo < 1){
 			haCamposInvalidos = true;
 			camposInvalidos.add("Codigo");
@@ -84,25 +82,25 @@ public class ClienteLogic {
 			haCamposInvalidos = true;
 			camposInvalidos.add("Nome");
 		}
-		if(sexo.isEmpty()){
-			haCamposInvalidos = true;
-			camposInvalidos.add("Sexo");
+		if(newsexo.isEmpty()){
+		haCamposInvalidos = true;
+		camposInvalidos.add("Sexo");
 		}
 		if (haCamposInvalidos){
 			throw new InvalidFieldException("Cliente", camposInvalidos);
 		}			
 		
-		Cliente c = new Cliente(codigo, nome, endereco, data_nasc, sexo, necessidade, tra);
+		Cliente c = new Cliente(codigo, nome, endereco, data_nasc, sexo, necessidade, trainer);
 		return cdb.updCliente(c);
 	}
 	
-	public boolean delCliente(int codigo, String nome, String endereco, Date data_nasc, String sexo, String necessidade, int trainer) throws
+	public boolean delCliente(int codigo, String nome, String endereco, Date data_nasc, char sexo, String necessidade, int trainer) throws
 		DataBaseGenericException, 
 		DataBaseNotConnectedException, 
 		EntityNotExistException 
 	{
 		Trainer tra = ac1.getTrainer(trainer);
-		Cliente c = new Cliente(codigo, nome, endereco, data_nasc, sexo, necessidade, tra);
+		Cliente c = new Cliente(codigo, nome, endereco, data_nasc, sexo, necessidade, trainer);
 		return cdb.delCliente(c);
 	}
 	
