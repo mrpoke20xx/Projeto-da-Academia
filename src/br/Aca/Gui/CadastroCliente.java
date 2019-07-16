@@ -76,34 +76,42 @@ public class CadastroCliente {
 		tf_necessidade = new JTextField();
 
 		// Criando os labels
-		lb1 = new JLabel("CÃ³digo do personal trainer: ");
-		lb2 = new JLabel("CÃ³digo do cliente: ");
-		lb3 = new JLabel("Sexo: ");
+		lb2 = new JLabel("Código do cliente: ");
 		lb4 = new JLabel("Nome: ");
-		lb5 = new JLabel("EndereÃ§o: ");
+		lb5 = new JLabel("Endereço: ");
 		lb6 = new JLabel("Data de Nascimento: ");
-		lb7 = new JLabel("Necessidade especÃ­fica: ");
-
+		lb3 = new JLabel("Sexo: ");
+		lb7 = new JLabel("Necessidade específica: ");
+		lb1 = new JLabel("Código do personal trainer: ");
+		
 		// Criando os botoes
 		// Configurando os botoe
 
 		/****** Adicionando os componentes aos paineis e os paineis a janela *********/
 
 		// Adicionando componentes ao painel info
-		p_Operacoes.add(lb1);
-		p_Operacoes.add(tf_tra_cod);
+		
 		p_Operacoes.add(lb2);
 		p_Operacoes.add(tf_cod);
-		p_Operacoes.add(lb3);
-		p_Operacoes.add(tf_sexo);
+		
 		p_Operacoes.add(lb4);
 		p_Operacoes.add(tf_nome);
+		
 		p_Operacoes.add(lb5);
 		p_Operacoes.add(tf_endereco);
+		
 		p_Operacoes.add(lb6);
 		p_Operacoes.add(tf_nasc);
+		
+		p_Operacoes.add(lb3);
+		p_Operacoes.add(tf_sexo);
+		
 		p_Operacoes.add(lb7);
 		p_Operacoes.add(tf_necessidade);
+		
+		p_Operacoes.add(lb1);
+		p_Operacoes.add(tf_tra_cod);
+		
 		bt_confirmar = new JButton(actConfirmar);
 
 		// Adiconando componentes ao painel botao
@@ -122,7 +130,7 @@ public class CadastroCliente {
 		AcaoConfirmar() {
 			super("Confirmar");
 			putValue(MNEMONIC_KEY, KeyEvent.VK_C);
-			putValue(SHORT_DESCRIPTION, "Confirmar operaÃ§Ã£o!");
+			putValue(SHORT_DESCRIPTION, "Confirmar operação!");
 
 		}
 
@@ -133,11 +141,11 @@ public class CadastroCliente {
 			int tra_cod, cli_cod;
 			char sexo;
 			Date nasc = null;
-			String nome, endereco, fone, curso, necessidade;
-
-			tra_cod = Integer.parseInt(tf_tra_cod.getText());
+			String nome, endereco, necessidade;
+			
 			cli_cod = Integer.parseInt(tf_cod.getText());
-			sexo = tf_sexo.getText().charAt(0);
+			
+			
 			nome = tf_nome.getText();
 			endereco = tf_endereco.getText();
 			try {
@@ -145,8 +153,9 @@ public class CadastroCliente {
 			} catch (ParseException e2) {
 				e2.printStackTrace();
 			}
+			sexo = tf_sexo.getText().charAt(0);
 			necessidade = tf_necessidade.getText();
-
+			tra_cod = Integer.parseInt(tf_tra_cod.getText());
 			try {
 				//int codigo, String nome, String endereco, Date data_nasc, char sexo, String necessidade, int trainer
 				switch (acao) {
@@ -166,7 +175,7 @@ public class CadastroCliente {
 				pai.buscar();
 			} catch (DataBaseGenericException | DataBaseNotConnectedException | EntityAlreadyExistException
 					| InvalidFieldException | EntityNotExistException e1) {
-			JOptionPane.showMessageDialog(janela, e1.getMessage(), "Cadastro de Centro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(janela, e1.getMessage(), "Cadastro de Cliente", JOptionPane.ERROR_MESSAGE);
 			}
 
 		}
@@ -177,7 +186,7 @@ public class CadastroCliente {
 		AcaoCancelar() {
 			super("Cancelar");
 			putValue(MNEMONIC_KEY, KeyEvent.VK_L);
-			putValue(SHORT_DESCRIPTION, "Cancelar operaÃƒÂ§ÃƒÂ£o!");
+			putValue(SHORT_DESCRIPTION, "Cancelar operação!");
 
 		}
 
@@ -195,7 +204,7 @@ public class CadastroCliente {
 	public void incluir() {
 
 		acao = INCLUSAO;
-		janela.setTitle("InclusÃ£o de cliente"); // supondo que no codigo Academico fosse um "this.setTitle"
+		janela.setTitle("Inclusão de cliente"); // supondo que no codigo Academico fosse um "this.setTitle"
 		tf_tra_cod.setEnabled(true);
 		tf_cod.setEnabled(true);
 		tf_sexo.setEnabled(true);
@@ -214,9 +223,9 @@ public class CadastroCliente {
 	public void editar(int cod) {
 
 		acao = EDICAO;
-		janela.setTitle("EdiÃ§Ã£o de informaÃ§Ãµes do cliente");
+		janela.setTitle("Edição de informações do cliente");
 
-		tf_tra_cod.setEnabled(false);
+		tf_tra_cod.setEnabled(true);
 		tf_cod.setEnabled(true);
 		tf_sexo.setEnabled(true);
 		tf_nome.setEnabled(true);
@@ -234,7 +243,7 @@ public class CadastroCliente {
 	public void excluir(int cod) {
 
 		acao = EXCLUSAO;
-		janela.setTitle("ExclusÃ£o de Cliente");
+		janela.setTitle("Exclusão de Cliente");
 
 		tf_tra_cod.setEnabled(false);
 		tf_cod.setEnabled(false);
@@ -279,7 +288,7 @@ public class CadastroCliente {
 			tf_necessidade.setText(p.getNecessidade());
 
 		} catch (DataBaseGenericException | DataBaseNotConnectedException | EntityNotExistException e) {
-			JOptionPane.showMessageDialog(janela, e.getMessage(), "Cadastro de Centro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(janela, e.getMessage(), "Cadastro de Cliente", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
