@@ -6,10 +6,10 @@ import br.Aca.Exception.*;
 
 public class AcademiaApp {
 
-	static final String DB_URL = "jdbc:mysql://localhost/academico";
+	//static final String DB_URL = "jdbc:mysql://localhost/academico";
 	
 	//PARA RODAR NO WINDOWS
-	//static final String DB_URL = "jdbc:mysql://localhost/academia?useTimezone=true&serverTimezone=UTC";
+	static final String DB_URL = "jdbc:mysql://localhost/academia?useTimezone=true&serverTimezone=UTC";
 	
 	// Método main inicia execução do aplicativo
 	public static void main(String args[]){

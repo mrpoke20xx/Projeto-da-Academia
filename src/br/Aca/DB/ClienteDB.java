@@ -29,7 +29,7 @@ public class ClienteDB {
 	{
 
 		String strIncluir = "INSERT INTO cliente ("
-				+ "cli_codigo, cli_nome, cli_endereco, cli_data_nasc, cli_sexo, cli_necessidade, cli_tra_cod) "
+				+ "cli_codigo, cli_nome, cli_endereco, cli_data_nasc, cli_sexo, cli_necessidade, cli_tra_codigo) "
 				+ "VALUES (" + c.getCodigo() 		+ ","
 				+ "'" + c.getNome() 				+ "',"
 				+ "'" + c.getEndereco() 			+ "',"

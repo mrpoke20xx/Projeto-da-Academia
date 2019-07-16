@@ -6,6 +6,17 @@ CREATE TABLE `academia` (
   PRIMARY KEY (`aca_codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE `trainer` (
+  `tra_codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `tra_nome` varchar(99) NOT NULL,
+  `tra_data_nasc` date NOT NULL,
+  `tra_sexo` char(1) NOT NULL,
+  `tra_aca_codigo` int(11) NOT NULL,
+  PRIMARY KEY (`tra_codigo`),
+  KEY `tra_aca_codigo` (`tra_aca_codigo`),
+  CONSTRAINT `trainer_ibfk_1` FOREIGN KEY (`tra_aca_codigo`) REFERENCES `academia` (`aca_codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 CREATE TABLE `cliente` (
   `cli_codigo` int(11) NOT NULL AUTO_INCREMENT,
   `cli_nome` varchar(99) NOT NULL,
@@ -49,16 +60,7 @@ CREATE TABLE `progresso` (
   CONSTRAINT `progresso_ibfk_1` FOREIGN KEY (`pro_cli_codigo`) REFERENCES `cliente` (`cli_codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `trainer` (
-  `tra_codigo` int(11) NOT NULL AUTO_INCREMENT,
-  `tra_nome` varchar(99) NOT NULL,
-  `tra_data_nasc` date NOT NULL,
-  `tra_sexo` char(1) NOT NULL,
-  `tra_aca_codigo` int(11) NOT NULL,
-  PRIMARY KEY (`tra_codigo`),
-  KEY `tra_aca_codigo` (`tra_aca_codigo`),
-  CONSTRAINT `trainer_ibfk_1` FOREIGN KEY (`tra_aca_codigo`) REFERENCES `academia` (`aca_codigo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 CREATE TABLE `treino` (
   `tre_codigo` int(11) NOT NULL AUTO_INCREMENT,

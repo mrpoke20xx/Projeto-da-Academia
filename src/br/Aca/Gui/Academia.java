@@ -127,7 +127,7 @@ class Academia extends JFrame {
 			try {
 				cnx.desconecte();
 			} catch (DataBaseNotConnectedException | DataBaseGenericException e1) {
-				// OBSERVEM QUE FOI CRIADA A INSTANCIA e1, POIS JÁ EXISTE e
+				// OBSERVEM QUE FOI CRIADA A INSTANCIA e1, POIS J�? EXISTE e
 				JOptionPane.showMessageDialog(null, e1.getMessage(), 
 						"Falha na autenticação", JOptionPane.ERROR_MESSAGE);
 
