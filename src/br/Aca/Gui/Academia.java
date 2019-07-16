@@ -1,7 +1,10 @@
 package br.Aca.Gui;
 
+import javax.imageio.ImageIO;
 import javax.swing.*; 					//importando classes do Swing
 import java.awt.event.*; 				//importando classes de EVENTOS do AWT
+import java.io.File;
+import java.io.IOException;
 
 import br.Aca.DB.*;
 import br.Aca.Exception.*;
@@ -45,6 +48,12 @@ class Academia extends JFrame {
 		mbOpcoes.add(mnCadastro);
 
 		setJMenuBar(mbOpcoes);
+		try {
+			setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("src/Cadimia.png")))));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	} //Fim do método construtor
 
