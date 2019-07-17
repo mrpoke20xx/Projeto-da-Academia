@@ -38,7 +38,7 @@ class ConsultaCliente extends JFrame {
 	ConsultaCliente(JFrame framePai, Conexao conexao){ // método construtor
 		super("Consulta de Cliente"); // chamando construtor da classe mãe
 		setSize(800, 400);				// definindo dimensões da janela
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Consulta de Cliente");
 
 		pai = (Academia) framePai;		
@@ -198,6 +198,8 @@ class ConsultaCliente extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 
 //			ClienteConsulta.this.setVisible(false);
+			
+			ConsultaCliente.this.dispose();
 			pai.setVisible(true);
 
 		}

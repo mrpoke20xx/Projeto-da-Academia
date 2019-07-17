@@ -4,7 +4,7 @@ import java.util.*;
 import br.Aca.DB.*;
 import br.Aca.Entity.*;
 import br.Aca.Exception.*;
-import java.sql.Date;
+import java.util.Date;
 
 public class ClienteLogic {
 
@@ -89,7 +89,7 @@ public class ClienteLogic {
 		if (haCamposInvalidos){
 			throw new InvalidFieldException("Cliente", camposInvalidos);
 		}			
-		
+		//		int codigo, String nome, String endereco, Date data_nasc, char sexo, String necessidade, int trainer	
 		Cliente c = new Cliente(codigo, nome, endereco, data_nasc, sexo, necessidade, trainer);
 		return cdb.updCliente(c);
 	}

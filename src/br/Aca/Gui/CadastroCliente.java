@@ -8,7 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -76,13 +76,13 @@ public class CadastroCliente {
 		tf_necessidade = new JTextField();
 
 		// Criando os labels
-		lb2 = new JLabel("Código do cliente: ");
+		lb2 = new JLabel("Cï¿½digo do cliente: ");
 		lb4 = new JLabel("Nome: ");
-		lb5 = new JLabel("Endereço: ");
+		lb5 = new JLabel("Endereï¿½o: ");
 		lb6 = new JLabel("Data de Nascimento: ");
 		lb3 = new JLabel("Sexo: ");
-		lb7 = new JLabel("Necessidade específica: ");
-		lb1 = new JLabel("Código do personal trainer: ");
+		lb7 = new JLabel("Necessidade especï¿½fica: ");
+		lb1 = new JLabel("Cï¿½digo do personal trainer: ");
 		
 		// Criando os botoes
 		// Configurando os botoe
@@ -130,7 +130,7 @@ public class CadastroCliente {
 		AcaoConfirmar() {
 			super("Confirmar");
 			putValue(MNEMONIC_KEY, KeyEvent.VK_C);
-			putValue(SHORT_DESCRIPTION, "Confirmar operação!");
+			putValue(SHORT_DESCRIPTION, "Confirmar operaï¿½ï¿½o!");
 
 		}
 
@@ -149,7 +149,7 @@ public class CadastroCliente {
 			nome = tf_nome.getText();
 			endereco = tf_endereco.getText();
 			try {
-				nasc = (Date) form.parse(tf_nasc.getText());
+				nasc = form.parse(tf_nasc.getText());
 			} catch (ParseException e2) {
 				e2.printStackTrace();
 			}
@@ -186,7 +186,7 @@ public class CadastroCliente {
 		AcaoCancelar() {
 			super("Cancelar");
 			putValue(MNEMONIC_KEY, KeyEvent.VK_L);
-			putValue(SHORT_DESCRIPTION, "Cancelar operação!");
+			putValue(SHORT_DESCRIPTION, "Cancelar operaï¿½ï¿½o!");
 
 		}
 
@@ -204,7 +204,7 @@ public class CadastroCliente {
 	public void incluir() {
 
 		acao = INCLUSAO;
-		janela.setTitle("Inclusão de cliente"); // supondo que no codigo Academico fosse um "this.setTitle"
+		janela.setTitle("Inclusï¿½o de cliente"); // supondo que no codigo Academico fosse um "this.setTitle"
 		tf_tra_cod.setEnabled(true);
 		tf_cod.setEnabled(true);
 		tf_sexo.setEnabled(true);
@@ -223,7 +223,7 @@ public class CadastroCliente {
 	public void editar(int cod) {
 
 		acao = EDICAO;
-		janela.setTitle("Edição de informações do cliente");
+		janela.setTitle("Ediï¿½ï¿½o de informaï¿½ï¿½es do cliente");
 
 		tf_tra_cod.setEnabled(true);
 		tf_cod.setEnabled(true);
@@ -243,7 +243,7 @@ public class CadastroCliente {
 	public void excluir(int cod) {
 
 		acao = EXCLUSAO;
-		janela.setTitle("Exclusão de Cliente");
+		janela.setTitle("Exclusï¿½o de Cliente");
 
 		tf_tra_cod.setEnabled(false);
 		tf_cod.setEnabled(false);

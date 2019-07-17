@@ -1,6 +1,6 @@
 package br.Aca.Entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Trainer {
 	private int codigo;

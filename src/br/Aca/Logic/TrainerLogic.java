@@ -4,7 +4,7 @@ import java.util.*;
 import br.Aca.DB.*;
 import br.Aca.Entity.*;
 import br.Aca.Exception.*;
-import java.sql.Date;
+import java.util.Date;
 
 public class TrainerLogic {
 

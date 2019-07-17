@@ -1,6 +1,7 @@
 package br.Aca.Entity;
 
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Cliente {
 	private int codigo;
@@ -10,6 +11,7 @@ public class Cliente {
 	private char sexo;
 	private String necessidade;
 	private int trainer;
+	private SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public Cliente(int codigo, String nome, String endereco, Date dataNasc, char sexo, String necessidade, int trainer){
 		this.codigo = codigo;

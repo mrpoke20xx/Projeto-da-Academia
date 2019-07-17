@@ -49,9 +49,9 @@ public class AcademiaDB {
 
 		Academia c = null;
 		
-		String strBusca = "SELECT aca_codigo, aca_nome, aca_endereco, aca_fone"
+		String strBusca = "SELECT aca_codigo, aca_nome, aca_endereco, aca_fone "
 				+ "FROM academia "
-				+ "WHERE aca_codigo = '" + codigo + "';";
+				+ "WHERE aca_codigo = " + codigo + ";";
 		
 		rs = cnx.consulte(strBusca);
 		
@@ -81,7 +81,7 @@ public class AcademiaDB {
 				+ "aca_nome = '" + c.getNome() + "',"
 				+ "aca_endereco = '" + c.getEndereco() + "',"
 				+ "aca_fone ='" + c.getFone() + "',"
-				+ "WHERE aca_codigo = '" + c.getCodigo() + "';";
+				+ "WHERE aca_codigo = " + c.getCodigo() + ";";
 
 		getAcademia(c.getCodigo());
 		return cnx.atualize(strAtualizao) > 0;
@@ -96,7 +96,7 @@ public class AcademiaDB {
 		
 		String strDelecao = 
 				"DELETE FROM academia "
-				+ "WHERE aca_codigo = '" + c.getCodigo() + "';";
+				+ "WHERE aca_codigo = " + c.getCodigo() + ";";
 		
 		getAcademia(c.getCodigo());		
 		return cnx.atualize(strDelecao) > 0;
