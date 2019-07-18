@@ -1,5 +1,6 @@
 package br.Aca.Gui;
 
+import javax.imageio.ImageIO;
 import javax.swing.*; 					//importando classes do Swing
 
 import br.Aca.DB.Conexao;
@@ -9,6 +10,8 @@ import br.Aca.Exception.*;
 
 import java.awt.*; 						//importando classes do AWT
 import java.awt.event.*; 				//importando classes de EVENTOS do AWT
+import java.io.File;
+import java.io.IOException;
 import java.sql.*;						//importando classes do JDBC
 import java.util.List;						//importando classes do JDBC
 import java.util.ArrayList;						//importando classes do JDBC
@@ -25,6 +28,7 @@ class TrainerConsulta extends JFrame {
 	JPanel pSuperior, pControles, pBotoes, pOperacoes, pRotulos, pChaves;
 	JComboBox cmbChaves;
 	JTextField tfValor;
+	JLabel lblImagem;
 	JButton btBuscar, btSair, btIncluir, btEditar, btExcluir;
 
 	AcaoBuscar actBuscar = new AcaoBuscar();
@@ -81,6 +85,13 @@ class TrainerConsulta extends JFrame {
 		pBotoes = new JPanel(new GridLayout(2,1));
 		pBotoes.add(btBuscar);
 		pBotoes.add(btSair);
+		
+		try {
+			lblImagem = new JLabel(new ImageIcon(ImageIO.read(new File("src/Cadastro.png"))));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		pSuperior = new JPanel(new BorderLayout());
 		pSuperior.add(pBotoes, BorderLayout.EAST);
@@ -88,7 +99,8 @@ class TrainerConsulta extends JFrame {
 
 		add(pSuperior, BorderLayout.NORTH);
 		add(new JScrollPane(tblQuery));
-		add(pOperacoes, BorderLayout.SOUTH);		
+		add(pOperacoes, BorderLayout.SOUTH);
+		add(lblImagem, BorderLayout.EAST);
 
 	} //Fim do método construtor
 
