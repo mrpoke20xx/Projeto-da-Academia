@@ -1,5 +1,6 @@
 package br.Aca.Gui;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.awt.BorderLayout;
@@ -8,6 +9,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.sql.ResultSet;
 import java.text.ParseException;
@@ -23,7 +26,7 @@ public class CadastroCliente {
 
 	JFrame janela = new JFrame("Cadastro de Novo Cliente");
 	private JPanel p_controles, p_Operacoes, p_rotulos, p_campos;
-	private JLabel lb1, lb2, lb3, lb4, lb5, lb6, lb7;
+	private JLabel lb1, lb2, lb3, lb4, lb5, lb6, lb7, lblImagem;
 	private JTextField tf_tra_cod, tf_cod, tf_sexo, tf_nome, tf_endereco, tf_nasc, tf_necessidade;
 	private JButton bt_confirmar, bt_cancelar;
 	private SimpleDateFormat form = new SimpleDateFormat("dd/MM/yyyy");
@@ -76,13 +79,13 @@ public class CadastroCliente {
 		tf_necessidade = new JTextField();
 
 		// Criando os labels
-		lb2 = new JLabel("C�digo do cliente: ");
+		lb2 = new JLabel("Codigo do cliente: ");
 		lb4 = new JLabel("Nome: ");
 		lb5 = new JLabel("Endere�o: ");
 		lb6 = new JLabel("Data de Nascimento: ");
 		lb3 = new JLabel("Sexo: ");
-		lb7 = new JLabel("Necessidade espec�fica: ");
-		lb1 = new JLabel("C�digo do personal trainer: ");
+		lb7 = new JLabel("Necessidade especifica: ");
+		lb1 = new JLabel("Codigo do personal trainer: ");
 		
 		// Criando os botoes
 		// Configurando os botoe
@@ -116,10 +119,18 @@ public class CadastroCliente {
 
 		// Adiconando componentes ao painel botao
 		p_rotulos.add(bt_confirmar);
+		
+		try {
+			lblImagem = new JLabel(new ImageIcon(ImageIO.read(new File("src/Cadastro.png"))));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// Adicionando os paineis a janela principal
 		janela.add(p_Operacoes, BorderLayout.CENTER);
 		janela.add(p_rotulos, BorderLayout.SOUTH);
+		janela.add(lblImagem, BorderLayout.EAST);
 
 		janela.pack();
 	}
