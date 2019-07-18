@@ -1,5 +1,6 @@
 package br.Aca.Gui;
 
+import javax.imageio.ImageIO;
 import javax.swing.*; 					//importando classes do Swing
 
 import br.Aca.DB.Conexao;
@@ -9,6 +10,8 @@ import br.Aca.Exception.*;
 
 import java.awt.*; 						//importando classes do AWT
 import java.awt.event.*; 				//importando classes de EVENTOS do AWT
+import java.io.File;
+import java.io.IOException;
 import java.sql.*;						//importando classes do JDBC
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,6 +32,7 @@ class TreinoCadastro extends JFrame {
 	private TreinoLogic tl;
 
 	private JPanel pControles, pOperacoes, pRotulos, pCampos;
+	private JLabel lblImagem;
 	private JComboBox cmbCentro;
 	private JTextField tfCodigo, tfVencimento, tfCliente, tfExercicio;
 	private JButton btConfirmar, btCancelar;
@@ -70,13 +74,22 @@ class TreinoCadastro extends JFrame {
 
 		btConfirmar = new JButton(actConfirmar);
 		btCancelar = new JButton(actCancelar);
+		
+		try {
+			lblImagem = new JLabel(new ImageIcon(ImageIO.read(new File("src/Cadastro.png"))));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 
 		pOperacoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		pOperacoes.add(btConfirmar);
 		pOperacoes.add(btCancelar);
 
 		add(pControles);
-		add(pOperacoes, BorderLayout.SOUTH);		
+		add(pOperacoes, BorderLayout.SOUTH);	
+		add(lblImagem, BorderLayout.EAST);
 
 		pack();
 

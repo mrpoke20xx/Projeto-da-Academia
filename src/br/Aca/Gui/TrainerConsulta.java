@@ -24,12 +24,12 @@ class TrainerConsulta extends JFrame {
 
 	TrainerCadastro trainerCadastro;
 
-	JTable tblQuery;
-	JPanel pSuperior, pControles, pBotoes, pOperacoes, pRotulos, pChaves;
-	JComboBox cmbChaves;
-	JTextField tfValor;
-	JLabel lblImagem;
-	JButton btBuscar, btSair, btIncluir, btEditar, btExcluir;
+	private JTable tblQuery;
+	private JPanel pSuperior, pControles, pBotoes, pOperacoes, pRotulos, pChaves;
+	private JComboBox cmbChaves;
+	private JTextField tfValor;
+	private JLabel lblImagem;
+	private JButton btBuscar, btSair, btIncluir, btEditar, btExcluir;
 
 	AcaoBuscar actBuscar = new AcaoBuscar();
 	AcaoIncluir actIncluir = new AcaoIncluir();
