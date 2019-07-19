@@ -39,9 +39,9 @@ class TrainerConsulta extends JFrame {
 
 	static final String imagesPath = new String("images/");	
 
-	TrainerConsulta(JFrame framePai, Conexao conexao){ // método construtor
-		super("Consulta de Trainer"); // chamando construtor da classe mãe
-		setSize(800, 400);				// definindo dimensões da janela
+	TrainerConsulta(JFrame framePai, Conexao conexao){ // mï¿½todo construtor
+		super("Consulta de Trainer"); // chamando construtor da classe mï¿½e
+		setSize(800, 400);				// definindo dimensï¿½es da janela
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		pai = (Academia) framePai;		
@@ -58,7 +58,7 @@ class TrainerConsulta extends JFrame {
 		pRotulos.add(new JLabel("Buscar por"));
 		pRotulos.add(new JLabel("Valor"));
 
-		cmbChaves = new JComboBox(new String[] {"Código", "Nome"});
+		cmbChaves = new JComboBox(new String[] {"Cï¿½digo", "Nome"});
 		tfValor = new JTextField();
 
 		pChaves = new JPanel(new GridLayout(2,1,5,5));
@@ -86,12 +86,6 @@ class TrainerConsulta extends JFrame {
 		pBotoes.add(btBuscar);
 		pBotoes.add(btSair);
 		
-		try {
-			lblImagem = new JLabel(new ImageIcon(ImageIO.read(new File("src/Cadastro.png"))));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		pSuperior = new JPanel(new BorderLayout());
 		pSuperior.add(pBotoes, BorderLayout.EAST);
@@ -100,9 +94,8 @@ class TrainerConsulta extends JFrame {
 		add(pSuperior, BorderLayout.NORTH);
 		add(new JScrollPane(tblQuery));
 		add(pOperacoes, BorderLayout.SOUTH);
-		add(lblImagem, BorderLayout.EAST);
 
-	} //Fim do método construtor
+	} //Fim do mï¿½todo construtor
 
 	class AcaoBuscar extends AbstractAction{
 

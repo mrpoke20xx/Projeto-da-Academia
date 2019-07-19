@@ -78,7 +78,7 @@ class TreinoCadastro extends JFrame {
 		btCancelar = new JButton(actCancelar);
 		
 		try {
-			lblImagem = new JLabel(new ImageIcon(ImageIO.read(new File("src/Cadastro.png"))));
+			lblImagem = new JLabel(new ImageIcon(ImageIO.read(new File("src/Treino.png"))));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
