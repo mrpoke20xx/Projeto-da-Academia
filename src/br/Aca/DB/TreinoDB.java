@@ -1,6 +1,8 @@
 package br.Aca.DB;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import br.Aca.Entity.*;
@@ -16,6 +18,8 @@ public class TreinoDB {
 	private ResultSet rs;
 	private ExercicioDB edb;
 	private ClienteDB cdb;
+	private DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+	private DateFormat df2 = new SimpleDateFormat("dd/MM/yyyy");
 
 	public TreinoDB(Conexao cnx){
 		this.cnx = cnx;
@@ -31,7 +35,7 @@ public class TreinoDB {
 		String strIncluir = "INSERT INTO treino ("
 				+ "tre_codigo, tre_vencimento, tre_cli_codigo, tre_exe_codigo) "
 				+ "VALUES (" + t.getCodigo() 	+ ","
-				+ "" + t.getVencimento() + ","
+				+ "'" +df.format(t.getVencimento()) + "',"
 				+ "" +t.getCliente().getCodigo() + ","
 				+ "" + t.getExercicio().getCodigo() + ");";
 
@@ -85,7 +89,7 @@ public class TreinoDB {
 	{
 
 		String strAtualizar = "UPDATE treino "
-				+ " SET tre_vencimento = " + t.getVencimento()	+ ", "
+				+ " SET tre_vencimento = '" + df.format(t.getVencimento())	+ "', "
 				+ " tre_cli_codigo = " + t.getCliente().getCodigo()	+ ", "
 				+ " tre_exe_codigo = " + t.getExercicio().getCodigo() +","
 				+ " WHERE tre_codigo = " + t.getCodigo() 	+ ";";

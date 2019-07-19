@@ -36,7 +36,6 @@ class TreinoCadastro extends JFrame {
 	private JComboBox cmbCentro;
 	private JTextField tfCodigo, tfVencimento, tfCliente, tfExercicio;
 	private JButton btConfirmar, btCancelar;
-	private JLabel lblImagem;
 
 	private SimpleDateFormat form = new SimpleDateFormat("dd/MM/yyyy");
 	
@@ -79,11 +78,12 @@ class TreinoCadastro extends JFrame {
 		btCancelar = new JButton(actCancelar);
 		
 		try {
-			lblImagem = new JLabel(new ImageIcon(ImageIO.read(new File("src/Treino.png"))));
+			lblImagem = new JLabel(new ImageIcon(ImageIO.read(new File("src/Cadastro.png"))));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 
 		pOperacoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		pOperacoes.add(btConfirmar);

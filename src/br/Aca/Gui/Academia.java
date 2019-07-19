@@ -14,6 +14,7 @@ class Academia extends JFrame {
 	private Conexao cnx = null;
 	
 	ConsultaCliente ccad;
+	TrainerConsulta ctad;
 	
 	AcaoCentro actCentro = new AcaoCentro();
 	AcaoAluno actAluno = new AcaoAluno();
@@ -33,6 +34,7 @@ class Academia extends JFrame {
 		cnx = conexao;
 		
 		ccad = new ConsultaCliente(this, cnx);
+		ctad = new TrainerConsulta(this, cnx);
 		
 		mbOpcoes = new JMenuBar();
 		
@@ -100,10 +102,10 @@ class Academia extends JFrame {
 	class AcaoAluno extends AbstractAction{
 
 		AcaoAluno(){
-			super("Aluno");
+			super("Trainer");
 			putValue(MNEMONIC_KEY, KeyEvent.VK_O);
 			putValue(SHORT_DESCRIPTION, 
-					"Gerenciar Alunos");
+					"Gerenciar Trainer");
 
 		}
 		
@@ -112,7 +114,7 @@ class Academia extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-//			alunoConsulta.setVisible(true);
+			ctad.setVisible(true);
 			Academia.this.setVisible(false);
 			
 		}
@@ -136,7 +138,7 @@ class Academia extends JFrame {
 			try {
 				cnx.desconecte();
 			} catch (DataBaseNotConnectedException | DataBaseGenericException e1) {
-				// OBSERVEM QUE FOI CRIADA A INSTANCIA e1, POIS J�? EXISTE e
+				// OBSERVEM QUE FOI CRIADA A INSTANCIA e1, POIS J�? EXISTE e
 				JOptionPane.showMessageDialog(null, e1.getMessage(), 
 						"Falha na autenticação", JOptionPane.ERROR_MESSAGE);
 

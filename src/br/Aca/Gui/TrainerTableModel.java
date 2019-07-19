@@ -48,7 +48,7 @@ public class TrainerTableModel extends AbstractTableModel{
 		String nome="";
 		
 		switch (columnIndex) {
-		case 0: nome = "Código"; break;
+		case 0: nome = "Cï¿½digo"; break;
 		case 1: nome = "Nome"; break;		
 		case 2: nome = "Data de Nascimento"; break;
 		case 3: nome = "Sexo"; break;		
@@ -64,11 +64,11 @@ public class TrainerTableModel extends AbstractTableModel{
 		Object obj;
 		
 		switch (columnIndex) {
-		case 0: obj = Integer.class; break;
+		case 0: obj = String.class; break;
 		case 1: obj = String.class; break;
-		case 2: obj = Date.class; break;		
+		case 2: obj = String.class; break;
 		case 3: obj = String.class; break;
-		case 4: obj = Academia.class; break;
+		case 4: obj = String.class; break;
 		default: obj = null; break;
 		}		
 

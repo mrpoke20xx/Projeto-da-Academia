@@ -1,6 +1,8 @@
 package br.Aca.DB;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import br.Aca.Entity.*;
@@ -15,6 +17,8 @@ public class TrainerDB {
 	private Conexao cnx;
 	private ResultSet rs;
 	private AcademiaDB adb;
+	private DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+	private DateFormat df2 = new SimpleDateFormat("dd/MM/yyyy");
 
 	public TrainerDB(Conexao cnx){
 		this.cnx = cnx;
@@ -31,7 +35,7 @@ public class TrainerDB {
 				+ "tra_codigo, tra_nome, tra_data_nasc, tra_sexo, tra_aca_codigo) "
 				+ "VALUES (" + t.getCodigo() 	+ ","
 				+ "'" + t.getNome() 				+ "',"
-				+ t.getDataNasc() 						+ ","
+				+ "'" +df.format(t.getDataNasc()) 						+ "',"
 				+ "'" +t.getSexo() 						+ "',"
 				+ "" + t.getAcademia().getCodigo()	+ ");";
 
@@ -84,7 +88,7 @@ public class TrainerDB {
 
 		String strAtualizar = "UPDATE trainer "
 				+ " SET tra_nome = '" + t.getNome() 			+ "',"
-				+ " tra_data_nasc = " + t.getDataNasc()						+ ", "
+				+ " tra_data_nasc = '" + df.format(t.getDataNasc())						+ "', "
 				+ " tra_sexo = '" + t.getSexo()					+ "', "
 				+ " tra_aca_codigo = " + t.getAcademia().getCodigo()	+ " "
 				+ " WHERE tra_codigo = " + t.getCodigo() 	+ ";";
