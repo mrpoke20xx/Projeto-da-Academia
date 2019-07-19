@@ -1,6 +1,5 @@
 package br.Aca.Gui;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.awt.BorderLayout;
@@ -9,8 +8,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 import java.sql.ResultSet;
 import java.text.ParseException;
@@ -26,7 +23,7 @@ public class CadastroCliente {
 
 	JFrame janela = new JFrame("Cadastro de Novo Cliente");
 	private JPanel p_controles, p_Operacoes, p_rotulos, p_campos;
-	private JLabel lb1, lb2, lb3, lb4, lb5, lb6, lb7, lblImagem;
+	private JLabel lb1, lb2, lb3, lb4, lb5, lb6, lb7;
 	private JTextField tf_tra_cod, tf_cod, tf_sexo, tf_nome, tf_endereco, tf_nasc, tf_necessidade;
 	private JButton bt_confirmar, bt_cancelar;
 	private SimpleDateFormat form = new SimpleDateFormat("dd/MM/yyyy");
@@ -115,13 +112,6 @@ public class CadastroCliente {
 		p_Operacoes.add(lb1);
 		p_Operacoes.add(tf_tra_cod);
 		
-		try {
-			lblImagem = new JLabel(new ImageIcon(ImageIO.read(new File("src/Cadastro.png"))));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 		bt_confirmar = new JButton(actConfirmar);
 
 		// Adiconando componentes ao painel botao
@@ -130,7 +120,6 @@ public class CadastroCliente {
 		// Adicionando os paineis a janela principal
 		janela.add(p_Operacoes, BorderLayout.CENTER);
 		janela.add(p_rotulos, BorderLayout.SOUTH);
-		janela.add(lblImagem, BorderLayout.EAST);
 
 		janela.pack();
 	}
@@ -295,7 +284,7 @@ public class CadastroCliente {
 			tf_sexo.setText((String.valueOf(p.getSexo())));
 			tf_nome.setText((p.getNome()));
 			tf_endereco.setText(p.getEndereco());
-			tf_nasc.setText(String.valueOf(p.getDataNasc()));
+			tf_nasc.setText(String.valueOf(form.format(p.getDataNasc())));
 			tf_necessidade.setText(p.getNecessidade());
 
 		} catch (DataBaseGenericException | DataBaseNotConnectedException | EntityNotExistException e) {
