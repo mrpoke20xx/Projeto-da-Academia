@@ -1,9 +1,12 @@
 package br.Aca.Gui;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.sql.ResultSet;
 
 import br.Aca.DB.*;
@@ -33,6 +36,7 @@ public class TrainerCadastro extends JFrame{
 	private JTextField tfCodigo, tfNome, tfDataNasc, tfSexo, tfAcademia;
 	private JButton btConfirmar, btCancelar;
 	private SimpleDateFormat form = new SimpleDateFormat("dd/MM/yyyy");
+	private JLabel lblImagem;
 	
 	AcaoConfirmar actConfirmar = new AcaoConfirmar();
 	AcaoCancelar actCancelar = new AcaoCancelar();
@@ -79,9 +83,16 @@ public class TrainerCadastro extends JFrame{
 		pOperacoes = new JPanel(new FlowLayout(FlowLayout.CENTER,5,5));
 		pOperacoes.add(btConfirmar);
 		pOperacoes.add(btCancelar);
+		try {
+			lblImagem = new JLabel(new ImageIcon(ImageIO.read(new File("src/Trainer.png"))));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		this.add(pControles);
 		this.add(pOperacoes, BorderLayout.SOUTH);
+		this.add(lblImagem.BorderLayout.EAST);
 		
 		this.pack();
 		
