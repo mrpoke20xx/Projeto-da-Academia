@@ -14,10 +14,13 @@ class Academia extends JFrame {
 	private Conexao cnx = null;
 	
 	ConsultaCliente ccad;
+	TrainerConsulta tc;
+	TreinoConsulta toc;
 	
-	AcaoCentro actCentro = new AcaoCentro();
-	AcaoAluno actAluno = new AcaoAluno();
-	AcaoProfessor actProfessor = new AcaoProfessor();	
+	
+	AcaoCliente actCliente = new AcaoCliente();
+	AcaoTreino actTreino = new AcaoTreino();
+	AcaoTrainer actTreiner = new AcaoTrainer();	
 	AcaoSair actSair = new AcaoSair();	
 
 	static final String imagesPath = new String("images/");
@@ -26,22 +29,24 @@ class Academia extends JFrame {
 	JMenu mnCadastro;
 
 	Academia(Conexao conexao){ // método construtor
-		super("Sistema de Controle Acadêmico"); // chamando construtor da classe mãe
+		super("Sistema de Gerenciamento da Academia"); // chamando construtor da classe mãe
 		setSize(800, 400);				// definindo dimensões da janela
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		cnx = conexao;
 		
 		ccad = new ConsultaCliente(this, cnx);
+		tc = new TrainerConsulta(this, cnx);
+		toc = new TreinoConsulta(this, cnx);
 		
 		mbOpcoes = new JMenuBar();
 		
 		mnCadastro = new JMenu("Cadastro");
 		mnCadastro.setMnemonic(KeyEvent.VK_D);
 		
-		mnCadastro.add(actCentro);
-		mnCadastro.add(actAluno);
-		mnCadastro.add(actProfessor);
+		mnCadastro.add(actCliente);
+		mnCadastro.add(actTreino);
+		mnCadastro.add(actTreiner);
 		mnCadastro.addSeparator();
 		mnCadastro.add(actSair);
 		
@@ -57,9 +62,9 @@ class Academia extends JFrame {
 		
 	} //Fim do método construtor
 
-	class AcaoCentro extends AbstractAction{
+	class AcaoCliente extends AbstractAction{
 
-		AcaoCentro(){
+		AcaoCliente(){
 			super("Cliente");
 			putValue(MNEMONIC_KEY, KeyEvent.VK_C);
 			putValue(SHORT_DESCRIPTION, 
@@ -76,13 +81,13 @@ class Academia extends JFrame {
 		}
 	}
 	
-	class AcaoProfessor extends AbstractAction{
+	class AcaoTrainer extends AbstractAction{
 
-		AcaoProfessor(){
-			super("Professor");
+		AcaoTrainer(){
+			super("Trainer");
 			putValue(MNEMONIC_KEY, KeyEvent.VK_P);
 			putValue(SHORT_DESCRIPTION, 
-					"Gerenciar Professores");
+					"Gerenciar Trainers");
 
 		}
 		
@@ -91,19 +96,19 @@ class Academia extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-//			professorConsulta.setVisible(true);
+			tc.setVisible(true);
 			Academia.this.setVisible(false);
 			
 		}
 	}
 	
-	class AcaoAluno extends AbstractAction{
+	class AcaoTreino extends AbstractAction{
 
-		AcaoAluno(){
-			super("Aluno");
+		AcaoTreino(){
+			super("Treino");
 			putValue(MNEMONIC_KEY, KeyEvent.VK_O);
 			putValue(SHORT_DESCRIPTION, 
-					"Gerenciar Alunos");
+					"Gerenciar Treinos (conjuntos de exercícios)");
 
 		}
 		
@@ -112,7 +117,7 @@ class Academia extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-//			alunoConsulta.setVisible(true);
+			toc.setVisible(true);
 			Academia.this.setVisible(false);
 			
 		}
@@ -136,7 +141,7 @@ class Academia extends JFrame {
 			try {
 				cnx.desconecte();
 			} catch (DataBaseNotConnectedException | DataBaseGenericException e1) {
-				// OBSERVEM QUE FOI CRIADA A INSTANCIA e1, POIS J�? EXISTE e
+				// OBSERVEM QUE FOI CRIADA A INSTANCIA e1, POIS J�? EXISTE e
 				JOptionPane.showMessageDialog(null, e1.getMessage(), 
 						"Falha na autenticação", JOptionPane.ERROR_MESSAGE);
 
@@ -145,7 +150,4 @@ class Academia extends JFrame {
 		}
 	}
 
-}//Fim da classe ProfessorConsulta
-
-
-
+}
