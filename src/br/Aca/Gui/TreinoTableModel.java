@@ -48,7 +48,7 @@ public class TreinoTableModel implements TableModel {
 		String nome="";
 		
 		switch (columnIndex) {
-		case 0: nome = "Sigla"; break;
+		case 0: nome = "Codigo"; break;
 		case 1: nome = "Exercicios"; break;		
 		}		
 		return nome; 	
