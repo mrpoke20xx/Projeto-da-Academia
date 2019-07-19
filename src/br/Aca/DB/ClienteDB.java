@@ -68,9 +68,8 @@ public class ClienteDB {
 
 			if (rs.next()){
 
-				trainer = tdb.getTrainer(rs.getInt(7));				
-					//int codigo, String nome, String endereco, Date dataNasc, char sexo, String necessidade, int trainer
-				cliente = new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getString(5).charAt(0), rs.getString(6),rs.getInt(7));
+				trainer = tdb.getTrainer((rs.getInt(7)));
+				cliente = new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getString(5).charAt(0), rs.getString(6), rs.getInt(7));
 
 			}else {
 				throw new EntityNotExistException("Cliente (cli_codigo=" + cli_codigo + ")");
@@ -91,10 +90,10 @@ public class ClienteDB {
 		String strAtualizar = "UPDATE cliente "
 				+ " SET cli_nome = '" + c.getNome() 				+ "',"
 				+ " cli_endereco = '" + c.getEndereco() 			+ "',"
-				+ " cli_data_nasc = " + df2.format(c.getDataNasc())	+ ", "
+				+ " cli_data_nasc = '" + df.format(c.getDataNasc())	+ "', "
 				+ " cli_sexo = '" + c.getSexo()						+ "', "
-				+ " cli_necessidade =" + c.getNecessidade() 		+ "',"
-				+ " cli_tra_cod = " + c.getTrainer()				+ " "
+				+ " cli_necessidade ='" + c.getNecessidade() 		+ "',"
+				+ " cli_tra_codigo = " + c.getTrainer()				+ " "
 				+ " WHERE cli_codigo = " + c.getCodigo() 			+ ";";
 
 		getCliente(c.getCodigo());
