@@ -1,6 +1,5 @@
 package br.Aca.Gui;
 
-import javax.imageio.ImageIO;
 import javax.swing.*; 					//importando classes do Swing
 
 import br.Aca.DB.Conexao;
@@ -10,8 +9,6 @@ import br.Aca.Exception.*;
 
 import java.awt.*; 						//importando classes do AWT
 import java.awt.event.*; 				//importando classes de EVENTOS do AWT
-import java.io.File;
-import java.io.IOException;
 import java.sql.*;						//importando classes do JDBC
 import java.util.List;						//importando classes do JDBC
 import java.util.ArrayList;						//importando classes do JDBC
@@ -24,12 +21,11 @@ class TrainerConsulta extends JFrame {
 
 	TrainerCadastro trainerCadastro;
 
-	private JTable tblQuery;
-	private JPanel pSuperior, pControles, pBotoes, pOperacoes, pRotulos, pChaves;
-	private JComboBox cmbChaves;
-	private JTextField tfValor;
-	private JLabel lblImagem;
-	private JButton btBuscar, btSair, btIncluir, btEditar, btExcluir;
+	JTable tblQuery;
+	JPanel pSuperior, pControles, pBotoes, pOperacoes, pRotulos, pChaves;
+	JComboBox cmbChaves;
+	JTextField tfValor;
+	JButton btBuscar, btSair, btIncluir, btEditar, btExcluir;
 
 	AcaoBuscar actBuscar = new AcaoBuscar();
 	AcaoIncluir actIncluir = new AcaoIncluir();
@@ -39,9 +35,9 @@ class TrainerConsulta extends JFrame {
 
 	static final String imagesPath = new String("images/");	
 
-	TrainerConsulta(JFrame framePai, Conexao conexao){ // mï¿½todo construtor
-		super("Consulta de Trainer"); // chamando construtor da classe mï¿½e
-		setSize(800, 400);				// definindo dimensï¿½es da janela
+	TrainerConsulta(JFrame framePai, Conexao conexao){ // método construtor
+		super("Consulta de Trainer"); // chamando construtor da classe mãe
+		setSize(800, 400);				// definindo dimensões da janela
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		pai = (Academia) framePai;		
@@ -58,7 +54,7 @@ class TrainerConsulta extends JFrame {
 		pRotulos.add(new JLabel("Buscar por"));
 		pRotulos.add(new JLabel("Valor"));
 
-		cmbChaves = new JComboBox(new String[] {"Cï¿½digo", "Nome"});
+		cmbChaves = new JComboBox(new String[] {"Código", "Nome"});
 		tfValor = new JTextField();
 
 		pChaves = new JPanel(new GridLayout(2,1,5,5));
@@ -85,7 +81,6 @@ class TrainerConsulta extends JFrame {
 		pBotoes = new JPanel(new GridLayout(2,1));
 		pBotoes.add(btBuscar);
 		pBotoes.add(btSair);
-		
 
 		pSuperior = new JPanel(new BorderLayout());
 		pSuperior.add(pBotoes, BorderLayout.EAST);
@@ -93,9 +88,9 @@ class TrainerConsulta extends JFrame {
 
 		add(pSuperior, BorderLayout.NORTH);
 		add(new JScrollPane(tblQuery));
-		add(pOperacoes, BorderLayout.SOUTH);
+		add(pOperacoes, BorderLayout.SOUTH);		
 
-	} //Fim do mï¿½todo construtor
+	} //Fim do método construtor
 
 	class AcaoBuscar extends AbstractAction{
 

@@ -1,6 +1,6 @@
 package br.Aca.Entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Treino {
 	private int codigo;
