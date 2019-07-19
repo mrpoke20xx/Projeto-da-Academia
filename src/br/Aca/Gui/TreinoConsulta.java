@@ -1,199 +1,160 @@
 package br.Aca.Gui;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.*;
+import javax.imageio.ImageIO;
+import javax.swing.*; 					//importando classes do Swing
 
 import br.Aca.DB.Conexao;
-import br.Aca.Gui.Academia;
 import br.Aca.Entity.Treino;
 import br.Aca.Logic.TreinoLogic;
 import br.Aca.Exception.*;
 
+import java.awt.*; 						//importando classes do AWT
+import java.awt.event.*; 				//importando classes de EVENTOS do AWT
+import java.io.File;
+import java.io.IOException;
+import java.sql.*;						//importando classes do JDBC
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+class TreinoCadastro extends JFrame {
 
-class TreinoConsulta extends JFrame {
+	private final int INCLUSAO = 0;
+	private final int EDICAO = 1;
+	private final int EXCLUSAO = 2;
 
-	private Conexao cnx = null;
+	private int acao, numeroDeCentros;
+	private String[] idCentros;
+
+	private TreinoConsulta pai;
+	private Conexao cnx;
+	private ResultSet rs;
+	private TreinoLogic tl;
+
+	private JPanel pControles, pOperacoes, pRotulos, pCampos;
+	private JLabel lblImagem;
+	private JComboBox cmbCentro;
+	private JTextField tfCodigo, tfVencimento, tfCliente, tfExercicio;
+	private JButton btConfirmar, btCancelar;
+
+	private SimpleDateFormat form = new SimpleDateFormat("dd/MM/yyyy");
 	
-	Academia pai;
-	TreinoLogic tl;
-
-	TreinoCadastro treinoCadastro;
-
-	JTable tblQuery;
-	JPanel pnlSuperior, pnlControles, pnlBotoes, pnlOperacoes, pnlRotulos, pnlChaves;
-	JComboBox cmbChaves;
-	JTextField fldValor;
-	JButton btnBuscar, btnSair, btnIncluir, btnEditar, btnExcluir;
-
-	AcaoBuscar actBuscar = new AcaoBuscar();
-	AcaoIncluir actIncluir = new AcaoIncluir();
-	AcaoEditar actEditar = new AcaoEditar();	
-	AcaoExcluir actExcluir = new AcaoExcluir();	
-	AcaoSair actSair = new AcaoSair();	
+	AcaoConfirmar actConfirmar = new AcaoConfirmar();
+	AcaoCancelar actCancelar = new AcaoCancelar();
 
 	static final String imagesPath = new String("images/");	
 
-	TreinoConsulta(JFrame framePai, Conexao conexao){ // metodo construtor
-		super("Consulta de Treino"); // chamando construtor da classe mae
-		setSize(800, 400);				// definindo dimensoes da janela
+	TreinoCadastro(JFrame framePai, Conexao conexao){ // metodo construtor
+		super(""); // chamando construtor da classe mae
+		setSize(1400, 600);				// definindo dimensoes da janela		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		pai = (Academia) framePai;		
+		pai = (TreinoConsulta)framePai;
 		cnx = conexao;
 		tl = new TreinoLogic(cnx);
 
-		treinoCadastro = new TreinoCadastro(this, cnx);
+		pRotulos = new JPanel(new GridLayout(4,1,5,5));
+		pRotulos.add(new JLabel("Codigo"));
+		pRotulos.add(new JLabel("Vencimento"));
+		pRotulos.add(new JLabel("Cliente"));
+		pRotulos.add(new JLabel("Exercicio"));
 
-		tblQuery = new JTable(0,0);
-		tblQuery.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tblQuery.addMouseListener(new HabilitarEdicaoExclusao());
+		tfCodigo = new JTextField();
+		tfVencimento = new JTextField();
+		tfCliente = new JTextField();
+		tfExercicio = new JTextField();
+		
+		pCampos = new JPanel(new GridLayout(4,1,5,5));
+		pCampos.add(tfCodigo);
+		pCampos.add(tfVencimento);
+		pCampos.add(tfCliente);
+		pCampos.add(tfExercicio);
+		
+		pControles = new JPanel(new BorderLayout(5,5));
+		pControles.add(pRotulos, BorderLayout.WEST);
+		pControles.add(pCampos);
 
-		pnlRotulos = new JPanel(new GridLayout(2,1,5,5));
-		pnlRotulos.add(new JLabel("Buscar por"));
-		pnlRotulos.add(new JLabel("Valor"));
+		btConfirmar = new JButton(actConfirmar);
+		btCancelar = new JButton(actCancelar);
+		
+		try {
+			lblImagem = new JLabel(new ImageIcon(ImageIO.read(new File("src/Cadastro.png"))));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		cmbChaves = new JComboBox(new String[] {"Codigo", "Nome"});
-		fldValor = new JTextField();
 
-		pnlChaves = new JPanel(new GridLayout(2,1,5,5));
-		pnlChaves.add(cmbChaves);
-		pnlChaves.add(fldValor);
+		pOperacoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		pOperacoes.add(btConfirmar);
+		pOperacoes.add(btCancelar);
 
-		pnlControles = new JPanel(new BorderLayout(5,5));
-		pnlControles.add(pnlRotulos, BorderLayout.WEST);
-		pnlControles.add(pnlChaves);
+		add(pControles);
+		add(pOperacoes, BorderLayout.SOUTH);	
+		add(lblImagem, BorderLayout.EAST);
 
-		btnBuscar = new JButton(actBuscar);
-		btnSair = new JButton(actSair);
-		btnIncluir = new JButton(actIncluir);
-		btnEditar = new JButton(actEditar);
-		btnEditar.setEnabled(false);
-		btnExcluir = new JButton(actExcluir);
-		btnExcluir.setEnabled(false);
+		pack();
 
-		pnlOperacoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		pnlOperacoes.add(btnIncluir);
-		pnlOperacoes.add(btnEditar);
-		pnlOperacoes.add(btnExcluir);
+	} //Fim do mÃ©todo construtor
 
-		pnlBotoes = new JPanel(new GridLayout(2,1));
-		pnlBotoes.add(btnBuscar);
-		pnlBotoes.add(btnSair);
+	class AcaoConfirmar extends AbstractAction{
 
-		pnlSuperior = new JPanel(new BorderLayout());
-		pnlSuperior.add(pnlBotoes, BorderLayout.EAST);
-		pnlSuperior.add(pnlControles);
-
-		add(pnlSuperior, BorderLayout.NORTH);
-		add(new JScrollPane(tblQuery));
-		add(pnlOperacoes, BorderLayout.SOUTH);		
-
-	} //Fim do metodo construtor
-
-	class AcaoBuscar extends AbstractAction{
-
-		AcaoBuscar(){
-			super("Buscar");
-			putValue(MNEMONIC_KEY, KeyEvent.VK_B);
+		AcaoConfirmar(){
+			super("Confirmar");
+			putValue(MNEMONIC_KEY, KeyEvent.VK_C);
 			putValue(SHORT_DESCRIPTION, 
-					"Buscar registros de treinos!");
+					"Confirmar operaÃ§Ã£o!");
 			putValue(SMALL_ICON, 
-					new ImageIcon(imagesPath+"general/Search24.gif"));
+					new ImageIcon(imagesPath+"general/Save24.gif"));
 
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
-			buscar();
-
+			Date vencimento = null;
+			String strAtualize = "";
+			try {
+				vencimento = form.parse(tfVencimento.getText());
+			} catch (ParseException e2) {
+				e2.printStackTrace();
+			}
+			
+			try {
+				switch (acao) {
+				case INCLUSAO:
+					 		   
+					tl.addTreino(Integer.parseInt(tfCodigo.getText()), vencimento, Integer.parseInt(tfCliente.getText()), Integer.parseInt(tfExercicio.getText()));
+					break;
+				case EDICAO:
+					tl.updTreino(Integer.parseInt(tfCodigo.getText()), vencimento, Integer.parseInt(tfCliente.getText()), Integer.parseInt(tfExercicio.getText()));
+					break;
+				case EXCLUSAO:
+					tl.delTreino(Integer.parseInt(tfCodigo.getText()), vencimento, Integer.parseInt(tfCliente.getText()), Integer.parseInt(tfExercicio.getText()));
+					break;
+				}
+				limparCampos();
+				TreinoCadastro.this.setVisible(false);
+				pai.setVisible(true);
+				pai.buscar();				
+			} catch (DataBaseGenericException | 
+					DataBaseNotConnectedException | 
+					EntityAlreadyExistException| 
+					InvalidFieldException | 
+					EntityNotExistException e1) 
+			{
+				JOptionPane.showMessageDialog(TreinoCadastro.this, e1.getMessage(), 
+						"Cadastro de Centro", JOptionPane.ERROR_MESSAGE);
+			}
 		}
-
 	}
 
-	class AcaoIncluir extends AbstractAction{
+	class AcaoCancelar extends AbstractAction{
 
-		AcaoIncluir(){
-			super("Incluir");
-			putValue(MNEMONIC_KEY, KeyEvent.VK_I);
+		AcaoCancelar(){
+			super("Cancelar");
+			putValue(MNEMONIC_KEY, KeyEvent.VK_L);
 			putValue(SHORT_DESCRIPTION, 
-					"Incluir registro de treino!");
-			putValue(SMALL_ICON, 
-					new ImageIcon(imagesPath+"general/New24.gif"));
-
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-			treinoCadastro.incluir();
-
-		}
-
-	}
-
-	class AcaoEditar extends AbstractAction{
-
-		AcaoEditar(){
-			super("Editar");
-			putValue(MNEMONIC_KEY, KeyEvent.VK_E);
-			putValue(SHORT_DESCRIPTION, 
-					"Editar registro de treino!");
-			putValue(SMALL_ICON, 
-					new ImageIcon(imagesPath+"general/Edit24.gif"));
-
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-			int codigo;
-			codigo = (int) tblQuery.getValueAt(tblQuery.getSelectedRow(), 0);
-			treinoCadastro.editar(codigo);
-
-		}
-
-	}
-
-	class AcaoExcluir extends AbstractAction{
-
-		AcaoExcluir(){
-			super("Excluir");
-			putValue(MNEMONIC_KEY, KeyEvent.VK_X);
-			putValue(SHORT_DESCRIPTION, 
-					"Excluir registro de treino!");
-			putValue(SMALL_ICON, 
-					new ImageIcon(imagesPath+"general/Delete24.gif"));
-
-		}
-
-		// PATRICAMENTE IGUAL AO DA AcaoEditar
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-			int codigo;
-			codigo = (int) tblQuery.getValueAt(tblQuery.getSelectedRow(), 0);
-			treinoCadastro.excluir(codigo);
-
-		}
-
-	}	
-
-	class AcaoSair extends AbstractAction{
-
-		AcaoSair(){
-			super("Sair");
-			putValue(MNEMONIC_KEY, KeyEvent.VK_R);
-			putValue(SHORT_DESCRIPTION, 
-					"Fecha consulta de treinos!");
+					"Cancelar operacao!");
 			putValue(SMALL_ICON, 
 					new ImageIcon(imagesPath+"general/Stop24.gif"));
 
@@ -202,59 +163,104 @@ class TreinoConsulta extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			TreinoConsulta.this.setVisible(false);
+			limparCampos();
+			TreinoCadastro.this.setVisible(false);
 			pai.setVisible(true);
-
+			pai.buscar();
 		}
 
 	}
 
-	public void buscar() {
+	public void incluir() {
 
-		List<Treino> treinos = new ArrayList<Treino>();
+		acao = INCLUSAO;
+		setTitle("Inclusao de Treino");
+		
+		tfCodigo.setEnabled(true);
+		tfVencimento.setEnabled(true);
+		tfCliente.setEnabled(true);
+		tfExercicio.setEnabled(true);
+		
+
+		limparCampos();
+
+		pai.setVisible(false);
+		setVisible(true);
+
+	}
+
+	public void editar(int codigo) {
+
+		acao = EDICAO;
+		setTitle("Edicao de Treino");
+
+		tfCodigo.setEnabled(false);
+		tfVencimento.setEnabled(true);
+		tfCliente.setEnabled(true);
+		tfExercicio.setEnabled(true);
+
+		carregarCampos(codigo);
+
+		pai.setVisible(false);
+		setVisible(true);
+
+	}
+
+	//PRATICAMENTE IGUAL AO editar
+	public void excluir(int codigo) {
+
+		acao = EXCLUSAO;
+		setTitle("Exclusao de Treino");
+
+		tfCodigo.setEnabled(false);
+		tfVencimento.setEnabled(false);
+		tfCliente.setEnabled(false);
+		tfExercicio.setEnabled(false);
+
+		carregarCampos(codigo);
+
+		pai.setVisible(false);
+		this.setVisible(true);
+
+	}	
+
+
+	public void limparCampos() {
+
+		tfCodigo.setText("");
+		tfVencimento.setText("");
+		tfCliente.setText("");
+		tfExercicio.setText("");
+
+	}
+
+	public void carregarCampos(int codigo) {
+
+		Treino c;
+		Date vencimento = null;
+		
+//		try {
+//			vencimento = form.parse(tfVencimento.getText());
+//		} catch (ParseException e2) {
+//			e2.printStackTrace();
+//		}
+		
 		try {
-			if(fldValor.getText().equals("")) {
-				treinos = tl.getTreinos();
-			}else{
-				switch (cmbChaves.getSelectedIndex()) {
-				case 0:
-					treinos.add(tl.getTreino(Integer.parseInt(fldValor.getText())));
-					break;
-//				case 1:
-//					treinos = tl.getTreinosPorNome(fldValor.getText());   //Metodo getTreinoPorNome n�o implementado 
-//					break;												  //em TreinoLogic
-				}
-
-			}
-			
-			tblQuery.setModel(new TreinoTableModel(treinos));
-			btnEditar.setEnabled(false);
-			btnExcluir.setEnabled(false);
-
+			c = tl.getTreino(codigo);
+			tfCodigo.setText(Integer.toString(c.getCodigo()));
+			tfVencimento.setText(form.format(c.getVencimento()));
+			tfCliente.setText(c.getCliente().toString());
+			tfExercicio.setText(c.getExercicio().toString());
 		} catch (DataBaseGenericException | 
 				DataBaseNotConnectedException | 
-				EntityTableIsEmptyException | 
 				EntityNotExistException e) 
 		{
 			JOptionPane.showMessageDialog(this, e.getMessage(), 
-					"Consulta de Treino", JOptionPane.ERROR_MESSAGE);
+					"Cadastro de Treino", JOptionPane.ERROR_MESSAGE);
 		}
+
 
 	}
 
-	class HabilitarEdicaoExclusao extends MouseAdapter {
-
-		public void mousePressed(MouseEvent e) {
-			if (tblQuery.getSelectedRow() >= 0) {
-				btnEditar.setEnabled(true);
-				btnExcluir.setEnabled(true);
-			}else {
-				btnEditar.setEnabled(false);
-				btnExcluir.setEnabled(false);
-			}
-
-		}
-
-	}	
 
 }
